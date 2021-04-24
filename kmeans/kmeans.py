@@ -1,24 +1,31 @@
 import pandas as pd 
 import matplotlib.pyplot as plt
 
-
+# NOTICE: This K_means only expected numberical dataset 
 class K_means: 
-    def __init__(self, n_clusters = 5, max_iter = 100, tol = 0.001):
+    def __init__(self, K = 5, max_iter = 100, tol = 0.001):
         ''' 
-            n_clusters: number of clusters/centroids 
+        param: 
+            K: number of clusters/centroids 
             max_iter: maximum number of itertions 
             tol: tolerance threshold, use to check consecutives iterations 
                                     to declare convergence 
         ''' 
-        self.K = n_clusters 
+        self.K = K 
         self.max_iter = max_iter
         self.tol = tol
 
-    def _init_centroid(self): 
+    def _init_centroid(self,data, random_init = False): 
         ''' 
-            random initialize centroid
+        Initialize centroid randomly or based on first few elements of dataset
+        param: 
+            data: 
+            random_init: True/False 
         ''' 
-        centroids = np.array([]).reshape(n,0)
+        centroids = {}
+        if random_init: 
+            centroids = np.array([]).reshape(n,0)
+
         # for k in range(self.K): 
             # random init value of centroid
             # centroids = 
@@ -27,18 +34,25 @@ class K_means:
 
     def train(self, data): 
         ''' 
+        param: 
         ''' 
+        # init centroid
         self.centroids = {}
-        # loss = {}
-        # init centroids 
-        # for iter in range(self.max_iter): 
-        #     for k in range(self.K): 
-        #         # compute distnace 
+        for i in range(self.K): 
+            self.centroids[i] = data[i]
 
-        return loss 
+        # classifiation
+        for i in range(self.max_iter): 
+            self.classification = {}
 
+        # iterate till max iter
 
-    def predict(): 
+        pass 
+
+    def predict(self, data): 
+        ''' 
+        param: 
+        ''' 
         classification = None  
         return classification
 
