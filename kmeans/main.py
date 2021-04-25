@@ -18,10 +18,16 @@ import matplotlib.pyplot as plt
 
 # Generate data with 200 samples, 5 random clusters
 X, y = make_blobs(n_samples=800, centers=5, random_state=101)
-plt.rcParams.update({'figure.figsize':(10,7.5), 'figure.dpi':100})
-plt.scatter(X[:, 0], X[:, 1])
-plt.show()
-print(y)
+# plt.rcParams.update({'figure.figsize':(10,7.5), 'figure.dpi':100})
+# plt.scatter(X[:, 0], X[:, 1])
+# plt.show()
+# print(y)
 
-from src import kmeans
+from src.kmeans import kmeans 
+
 clf = kmeans.K_means()
+
+from utils.util import *  
+
+print(get_initial_centroids(X,5))
+# print(utils.path)

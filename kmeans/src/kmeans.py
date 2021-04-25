@@ -17,68 +17,106 @@ import matplotlib.pyplot as plt
 def euclidean_distance(A_matrix, B_matrix): 
     ''' 
     Function computes Euclidean distance for every elements of A to B
-    E.g: C[2,15] is distance between point 2 from A[2] matrix and point 15 from matrix B[15]
+    E.g: C[2,15] is distance between point 2 from A[2] matrix 
+        and point 15 from matrix B[15]
     param: 
         A_matrix: numpy array type, N1:D 
         B_matrix: numpy array type, N2:D
     return: 
         distance: numpy array dtype, N1:N2
     ''' 
-        distance = numpy.linalg.norm(A_matrix - B_matrix)
-    return distance
+    A_square = np.reshape(np.sum(A_matrix * A_matrix, axis=1), (A_matrix.shape[0], 1))
+    B_square = np.reshape(np.sum(B_matrix * B_matrix, axis=1), (1, B_matrix.shape[0]))
+    AB = A_matrix @ B_matrix.T
+    C = -2 * AB + B_square + A_square
+    return np.sqrt(C)
+
 
 class K_means: 
-    def __init__(self, K = 5, max_iter = 100, tol = 0.001):
+    def __init__(self, K = 5, max_iter = 100, 
+                tol = 0.001, 
+                distance_measuring_method = euclidean_distance):
         ''' 
         param: 
             K: number of clusters/centroids 
             max_iter: maximum number of itertions 
             tol: tolerance threshold, use to check consecutives iterations 
                                     to declare convergence 
+            distance_measure_method: default is Euclidean distance method 
         ''' 
         self.K = K 
         self.max_iter = max_iter
         self.tol = tol
+        self.distance_method = distance_measure_method
 
-    # TODO: complete _init_centroids 
-    def _init_centroid(self,data, random_init = False): 
+    # TODO: complete _init_centroids with randomly selection 
+    def _init_centroid(self,data): 
         ''' 
-        Initialize centroid randomly or based on first few elements of dataset
+        Initialize centroid from the data points 
         param: 
             data: data use to train K-means algorithm 
-            random_init: True/False 
         return: 
             centroids: dictionary datatype, size of K
         ''' 
         centroids = {}
-        if random_init: 
-            centroids = np.array([]).reshape(n,0)
+        for k in range(self.K): 
+            self.centroids[k] = data[k]
 
-        # for k in range(self.K): 
-            # random init value of centroid
-            # centroids = 
         return centroids  
+    
+    # TODO: complete check if centroids is covered using self.K  
+    def _has_convergence(prev_centroids, curr_centroids): 
+        ''' 
+        Check if any centroids moved more than 'self.tol' threshold 
+        Default measurement distance is Euclidean distance
+        param: 
+            prev_centroids: numpy array
+            curr_centroids
+            distance_measuring_method
+        return: 
+            True if centroids is covered, False if not 
+        '''
+        centroids_covered = False
+        distance_between_centroids = self.distance_method(prev_centroids, curr_centroids) 
+        # TODO: why checking diagonal of the distance matrix? 
+        # pseudo code: if distance_matrix.diagonal() >= thresholc -> True, else -> False
+        return centroids_covered
 
+    # TODO: 
+    def _assign_to_centroids(data, centroids): 
+        ''' 
+        param: 
+            data
+            centroids
+        return: 
+        '''
 
+        return new_centroids
+
+    # TODO: complete train function
     def train(self, data): 
         ''' 
         param: 
         ''' 
+
         # init centroid
-        self.centroids = {}
-        for i in range(self.K): 
-            self.centroids[i] = data[i]
+        curr_centroids = self._init_centroid(data = data)
+        
+        centroids_convered = False 
+        # main training loop
+        while centroids_convered: 
+            prev_centroids = curr_centroids 
 
-            # classifiation
-            for i in range(self.max_iter): 
-                self.classification = {}
+        # main training loop
+        # for i in range(self.max_iter): 
+        #     self.classification = {}
+        #     for i in range(self.K): 
 
-        # iterate till max iter
-
-        pass 
 
     def predict(self, data): 
         ''' 
         param: 
+        return: 
         ''' 
         pass 
+
