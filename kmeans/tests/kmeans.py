@@ -1,3 +1,4 @@
+# Ref: https://github.com/tugot17/K-Means-Algorithm-From-Scratch/blob/master/k-means.py
 import numpy as np
 import random
 import cv2
