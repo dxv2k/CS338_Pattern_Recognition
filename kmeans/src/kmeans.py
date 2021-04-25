@@ -48,6 +48,8 @@ class K_means:
         self.max_iter = max_iter
         self.tol = tol
         self.distance_method = distance_measuring_method
+        self.centroids = {}
+
 
     # TODO: complete _init_centroids with randomly selection 
     def _init_centroid(self,data): 
@@ -64,7 +66,6 @@ class K_means:
 
         return centroids  
     
-    # TODO: complete check if centroids is covered using self.K  
     def _has_convergence(prev_centroids, curr_centroids): 
         ''' 
         Check if any centroids moved more than 'self.tol'/tolerance threshold 
@@ -83,13 +84,14 @@ class K_means:
         return centroids_covered
 
     # TODO: 
-    def _assign_to_centroids(data, centroids): 
+    def _assign_to_clusters(data, centroids): 
         ''' 
-
+        Assign N data points to clusters
         param: 
-            data
+            data: numpy array  
             centroids
         return: 
+            dict type {cluster_number: list of points in cluster}
         '''
 
         return new_centroids
@@ -97,8 +99,11 @@ class K_means:
     # TODO: complete train function
     def train(self, data): 
         ''' 
+        Perform K-means clusterings on given dataset
         param: 
+            data  
         return: 
+
         ''' 
 
         # init centroid
@@ -106,9 +111,9 @@ class K_means:
         
         centroids_convered = False 
         # main training loop
-        while centroids_convered: 
+        while not centroids_convered: 
             prev_centroids = new_centroids 
-
+            centroids_convered = self._has_convergence(prev_centroids, new_centroids)
         # main training loop
         # for i in range(self.max_iter): 
         #     self.classification = {}
