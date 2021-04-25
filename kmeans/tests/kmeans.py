@@ -75,7 +75,8 @@ def get_clusters(X, centroids, distance_mesuring_method):
 
     distance_matrix = distance_mesuring_method(X, centroids)
 
-    closest_cluster_ids = np.argmin(distance_matrix, axis=1)
+    # closest_cluster_ids = np.argmin(distance_matrix, axis=1)
+    closest_cluster_ids = np.argmin(distance_matrix)
 
     for i in range(k):
         clusters[i] = []
@@ -140,36 +141,18 @@ import matplotlib.pyplot as plt
 
 # Generate data with 200 samples, 5 random clusters
 X, y = make_blobs(n_samples=800, centers=5, random_state=101)
-# plt.rcParams.update({'figure.figsize':(10,7.5), 'figure.dpi':100})
-# plt.scatter(X[:, 0], X[:, 1])
-# plt.show()
-from sklearn.datasets import make_blobs
-import matplotlib.pyplot as plt 
-
-# Generate data with 200 samples, 5 random clusters
-X, y = make_blobs(n_samples=800, centers=5, random_state=101)
-# plt.rcParams.update({'figure.figsize':(10,7.5), 'figure.dpi':100})
-# plt.scatter(X[:, 0], X[:, 1])
-# plt.show()
-from sklearn.datasets import make_blobs
-import matplotlib.pyplot as plt 
-
-# Generate data with 200 samples, 5 random clusters
-X, y = make_blobs(n_samples=800, centers=5, random_state=101)
 plt.rcParams.update({'figure.figsize':(10,7.5), 'figure.dpi':100})
 plt.scatter(X[:, 0], X[:, 1])
 plt.show()
 
-clusters = perform_k_means_algorithm(X,5, get_euclidean_distance)
-plt.rcParams.update({'figure.figsize':(10,7.5), 'figure.dpi':100})
-plt.scatter(clusters[:, 0], clusters[:, 1])
-plt.show()
+# clusters = perform_k_means_algorithm(X,5, get_euclidean_distance)
+# plt.rcParams.update({'figure.figsize':(10,7.5), 'figure.dpi':100})
+# plt.scatter(clusters[:, 0], clusters[:, 1])
+# plt.show()
 
-
-
-
-
-
+centroids = get_initial_centroids(X,5)
+clusters_info = get_clusters(X,centroids,get_euclidean_distance)
+print(clusters_info)
 
 # def get_reduced_colors_image(image, number_of_colors):
 #     """

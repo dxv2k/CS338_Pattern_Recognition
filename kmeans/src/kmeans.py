@@ -48,13 +48,13 @@ class K_means:
         self.max_iter = max_iter
         self.tol = tol
         self.distance_method = distance_measuring_method
-        self.centroids = {}
-
+        self.centroids = {} # number of centroids = number of K 
+                            # which stores data points 
 
     # TODO: complete _init_centroids with randomly selection 
     def _init_centroid(self,data): 
         ''' 
-        Initialize centroid from the data points 
+        Initialize centroid from the data points based on number K 
         param: 
             data: data use to train K-means algorithm 
         return: 
@@ -66,7 +66,7 @@ class K_means:
 
         return centroids  
     
-    def _has_convergence(prev_centroids, curr_centroids): 
+    def _has_convergence(self,prev_centroids, curr_centroids): 
         ''' 
         Check if any centroids moved more than 'self.tol'/tolerance threshold 
         Default measurement distance is Euclidean distance
@@ -84,17 +84,31 @@ class K_means:
         return centroids_covered
 
     # TODO: 
-    def _assign_to_clusters(data, centroids): 
+    def _assign_to_clusters(self,data, centroids): 
         ''' 
-        Assign N data points to clusters
+        Assign N data points to clusters based on given centroids
         param: 
             data: numpy array  
             centroids
         return: 
             dict type {cluster_number: list of points in cluster}
         '''
+        clusters = {}
+        # init empty dictionray with size of K 
+        for i in range(self.K): 
+            clusters[i] = []
 
-        return new_centroids
+        # compute distance of each data points to centroids  
+        distance = self.distance_method(data, centroids)
+
+        # TODO: no understanding why using argmin result in indices
+        # Doc: https://numpy.org/doc/stable/reference/generated/numpy.indices.html
+        # Doc: https://numpy.org/doc/stable/reference/generated/numpy.argmin.html
+        closest_cluster_ids = np.argmin(distance, axis = 1)
+
+
+        # for idx, cluster_id in enumerate()
+        return clusters
 
     # TODO: complete train function
     def train(self, data): 
@@ -113,12 +127,14 @@ class K_means:
         # main training loop
         while not centroids_convered: 
             prev_centroids = new_centroids 
+            clusters = self._assign_to_clusters(data,prev_centroids)
+            # TODO: working on compute new_centroids compute average 
             centroids_convered = self._has_convergence(prev_centroids, new_centroids)
-        # main training loop
-        # for i in range(self.max_iter): 
-        #     self.classification = {}
-        #     for i in range(self.K): 
 
+
+        self.centroid = new_centroids
+        
+        return self.centroids 
 
     def predict(self, data): 
         ''' 
