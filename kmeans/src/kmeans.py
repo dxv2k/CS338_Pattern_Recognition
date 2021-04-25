@@ -27,7 +27,7 @@ def euclidean_distance(A_matrix, B_matrix):
     ''' 
     A_square = np.reshape(np.sum(A_matrix * A_matrix, axis=1), (A_matrix.shape[0], 1))
     B_square = np.reshape(np.sum(B_matrix * B_matrix, axis=1), (1, B_matrix.shape[0]))
-    AB = A_matrix @ B_matrix.T
+    AB = np.dot(A_matrix,B_matrix.T) 
     C = -2 * AB + B_square + A_square
     return np.sqrt(C)
 
@@ -47,7 +47,7 @@ class K_means:
         self.K = K 
         self.max_iter = max_iter
         self.tol = tol
-        self.distance_method = distance_measure_method
+        self.distance_method = distance_measuring_method
 
     # TODO: complete _init_centroids with randomly selection 
     def _init_centroid(self,data): 
@@ -67,7 +67,7 @@ class K_means:
     # TODO: complete check if centroids is covered using self.K  
     def _has_convergence(prev_centroids, curr_centroids): 
         ''' 
-        Check if any centroids moved more than 'self.tol' threshold 
+        Check if any centroids moved more than 'self.tol'/tolerance threshold 
         Default measurement distance is Euclidean distance
         param: 
             prev_centroids: numpy array
@@ -76,15 +76,16 @@ class K_means:
         return: 
             True if centroids is covered, False if not 
         '''
-        centroids_covered = False
         distance_between_centroids = self.distance_method(prev_centroids, curr_centroids) 
         # TODO: why checking diagonal of the distance matrix? 
         # pseudo code: if distance_matrix.diagonal() >= thresholc -> True, else -> False
+        centroids_covered = np.max(distance_between_centroids.diagonal()) <= self.tol
         return centroids_covered
 
     # TODO: 
     def _assign_to_centroids(data, centroids): 
         ''' 
+
         param: 
             data
             centroids
@@ -97,15 +98,16 @@ class K_means:
     def train(self, data): 
         ''' 
         param: 
+        return: 
         ''' 
 
         # init centroid
-        curr_centroids = self._init_centroid(data = data)
+        new_centroids = self._init_centroid(data = data)
         
         centroids_convered = False 
         # main training loop
         while centroids_convered: 
-            prev_centroids = curr_centroids 
+            prev_centroids = new_centroids 
 
         # main training loop
         # for i in range(self.max_iter): 

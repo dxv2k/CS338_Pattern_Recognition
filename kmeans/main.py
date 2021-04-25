@@ -23,11 +23,11 @@ X, y = make_blobs(n_samples=800, centers=5, random_state=101)
 # plt.show()
 # print(y)
 
-from src.kmeans import kmeans 
+from src.kmeans import * 
 
-clf = kmeans.K_means()
+clf = K_means()
 
-from utils.util import *  
+# from utils.util import *  
 
-print(get_initial_centroids(X,5))
+# print(get_initial_centroids(X,5))
 # print(utils.path)
