@@ -105,9 +105,9 @@ class K_means:
         # Doc: https://numpy.org/doc/stable/reference/generated/numpy.indices.html
         # Doc: https://numpy.org/doc/stable/reference/generated/numpy.argmin.html
         closest_cluster_ids = np.argmin(distance, axis = 1)
+        for idx, cluster_id in enumerate(closest_cluster_ids):
+            clusters[cluster_id].append(data[i])
 
-
-        # for idx, cluster_id in enumerate()
         return clusters
 
     # TODO: complete train function

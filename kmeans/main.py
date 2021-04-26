@@ -17,8 +17,9 @@ from src.kmeans import *
 
 cluster_algo = K_means(K = 5)
 
-cluster_algo.train(X)
-
+cls = cluster_algo._init_centroid(X)
+cls = cluster_algo._assign_to_clusters(X,cls) 
+print(cls)
 
 
 
