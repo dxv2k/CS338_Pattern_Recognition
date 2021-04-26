@@ -60,11 +60,13 @@ class K_means:
         return: 
             centroids: dictionary datatype, size of K
         ''' 
-        centroids = {}
+        # centroids = {}
+        # for k in range(self.K): 
+        #     self.centroids[k] = data[k]
+        centroids = []
         for k in range(self.K): 
-            self.centroids[k] = data[k]
-
-        return centroids  
+            centroids.append(data[k])
+        return np.array(centroids) 
     
     def _has_convergence(self,prev_centroids, curr_centroids): 
         ''' 
@@ -94,7 +96,7 @@ class K_means:
             dict type {cluster_number: list of points in cluster}
         '''
         clusters = {}
-        # init empty dictionray with size of K 
+        # init empty dictionary with size of K 
         for i in range(self.K): 
             clusters[i] = []
 
@@ -104,6 +106,7 @@ class K_means:
         # TODO: no understanding why using argmin result in indices
         # Doc: https://numpy.org/doc/stable/reference/generated/numpy.indices.html
         # Doc: https://numpy.org/doc/stable/reference/generated/numpy.argmin.html
+        # BUG at 110, axis 1 is out of bounds
         closest_cluster_ids = np.argmin(distance, axis = 1)
         for idx, cluster_id in enumerate(closest_cluster_ids):
             clusters[cluster_id].append(data[i])
@@ -111,11 +114,11 @@ class K_means:
         return clusters
 
     # TODO: complete train function
-    def train(self, data): 
+    def fit(self, data): 
         ''' 
         Perform K-means clusterings on given dataset
         param: 
-            data  
+            data:  
         return: 
 
         ''' 
@@ -128,17 +131,27 @@ class K_means:
         while not centroids_convered: 
             prev_centroids = new_centroids 
             clusters = self._assign_to_clusters(data,prev_centroids)
+            # new_centroids = 
             # TODO: working on compute new_centroids compute average 
-            centroids_convered = self._has_convergence(prev_centroids, new_centroids)
+            new_centroids = np.array([np.mean(clusters[key], axis=0, dtype=data.dtype) 
+                                    for key in clusters.keys() ])
+            # new_centroids = np.array([np.mean(clusters[key], axis=0, dtype=data.dtype) 
+            #                         for key in sorted(clusters.keys())
+            # ])
+                
+            print(new_centroids)
+            # centroids_convered = self._has_convergence(prev_centroids, new_centroids)
 
 
         self.centroid = new_centroids
         
-        return self.centroids 
+        # return self.centroids 
 
-    def predict(self, data): 
+    def predict(self, data_test): 
         ''' 
-        param: 
+        Clustering data test with compute centroids 
+        param:
+            data_test: numpy array 
         return: 
         ''' 
         pass 

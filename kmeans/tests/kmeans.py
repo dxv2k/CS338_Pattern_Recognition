@@ -76,8 +76,8 @@ def get_clusters(X, centroids, distance_mesuring_method):
 
     distance_matrix = distance_mesuring_method(X, centroids)
     len(distance_matrix)
-    # closest_cluster_ids = np.argmin(distance_matrix, axis=1)
-    closest_cluster_ids = np.argmin(distance_matrix)
+    closest_cluster_ids = np.argmin(distance_matrix, axis=1)
+    # closest_cluster_ids = np.argmin(distance_matrix)
 
     for i in range(k):
         clusters[i] = []
@@ -103,7 +103,6 @@ def has_centroids_covered(previous_centroids, new_centroids, distance_mesuring_m
     """
     distances_between_old_and_new_centroids = distance_mesuring_method(previous_centroids, new_centroids)
     centroids_covered = np.max(distances_between_old_and_new_centroids.diagonal()) <= movement_threshold_delta
-
     return centroids_covered
 
 
@@ -153,7 +152,8 @@ plt.show()
 
 centroids = get_initial_centroids(X,5)
 clusters_info = get_clusters(X,centroids,get_euclidean_distance)
-print(clusters_info)
+print(perform_k_means_algorithm(X,5,get_euclidean_distance))
+# print(clusters_info)
 
 # def get_reduced_colors_image(image, number_of_colors):
 #     """
