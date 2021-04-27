@@ -17,8 +17,8 @@ from src.kmeans import *
 
 cluster_algo = K_means()
 
-centroidsA = cluster_algo._init_centroid(X)
-centroidsB = cluster_algo._init_centroid(X)
+# centroidsA = cluster_algo._init_centroid(X)
+# centroidsB = cluster_algo._init_centroid(X)
 
 # cls = cluster_algo._assign_to_clusters(X,centroids) 
 print(cluster_algo.fit(X))
