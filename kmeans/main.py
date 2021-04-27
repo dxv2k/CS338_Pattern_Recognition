@@ -21,7 +21,7 @@ centroidsA = cluster_algo._init_centroid(X)
 centroidsB = cluster_algo._init_centroid(X)
 
 # cls = cluster_algo._assign_to_clusters(X,centroids) 
-print(cluster_algo._has_convergence(centroidsA,centroidsA))
+print(cluster_algo.fit(X))
 # print(cls)
 
 

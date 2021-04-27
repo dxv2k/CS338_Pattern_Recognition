@@ -11,8 +11,11 @@ import random
 # Repate 2-3 until convergence
 
 
-
 # Ref: https://github.com/tugot17/K-Means-Algorithm-From-Scratch/blob/master/k-means.py
+
+
+# Using sklearn Euclidean Distances for debug purpose 
+from sklearn.metrics.pairwise import euclidean_distances
 
 def euclidean_distance(A_matrix, B_matrix): 
     ''' 
@@ -29,13 +32,15 @@ def euclidean_distance(A_matrix, B_matrix):
     B_square = np.reshape(np.sum(B_matrix * B_matrix, axis=1), (1, B_matrix.shape[0]))
     AB = np.dot(A_matrix,B_matrix.T) 
     C = -2 * AB + B_square + A_square
+    # BUG: no idea why compute np.sqrt() value like 1.0 throw NaN instead of 1
     return np.sqrt(C)
 
 
 class K_means: 
     def __init__(self, K = 5, max_iter = 100, 
                 tol = 0.001, 
-                distance_measuring_method = euclidean_distance):
+                # distance_measuring_method = euclidean_distance):
+                distance_measuring_method = euclidean_distances):
         ''' 
         param: 
             K: number of clusters/centroids 
