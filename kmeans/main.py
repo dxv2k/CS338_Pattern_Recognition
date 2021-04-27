@@ -15,12 +15,14 @@ X, y = make_blobs(n_samples=800, centers=5, random_state=101)
 
 from src.kmeans import * 
 
-cluster_algo = K_means(K = 5)
+cluster_algo = K_means()
 
-centroids = cluster_algo._init_centroid(X)
-cls = cluster_algo._assign_to_clusters(X,centroids) 
-cluster_algo.fit(X)
-print(cls)
+centroidsA = cluster_algo._init_centroid(X)
+centroidsB = cluster_algo._init_centroid(X)
+
+# cls = cluster_algo._assign_to_clusters(X,centroids) 
+print(cluster_algo._has_convergence(centroidsA,centroidsA))
+# print(cls)
 
 
 
