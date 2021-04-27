@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
-
+import random 
 # NOTICE: This K_means only expected numberical dataset 
 # Steps: 
 # 1. Random selection of centroids 
@@ -48,26 +48,40 @@ class K_means:
         self.max_iter = max_iter
         self.tol = tol
         self.distance_method = distance_measuring_method
+        
+        # Centroids should be using as place holder to store result
         self.centroids = {} # number of centroids = number of K 
                             # which stores data points 
 
-    # TODO: complete _init_centroids with randomly selection 
     def _init_centroid(self,data): 
         ''' 
-        Initialize centroid from the data points based on number K 
+        Initialize centroid randomly from the data points based on number K 
         param: 
             data: data use to train K-means algorithm 
         return: 
             centroids: dictionary datatype, size of K
         ''' 
-        # centroids = {}
-        # for k in range(self.K): 
-        #     self.centroids[k] = data[k]
-        centroids = []
-        for k in range(self.K): 
-            centroids.append(data[k])
-        return np.array(centroids) 
-    
+        # get length and random idx of first centroids 
+        number_of_samples = data.shape[0]
+        sample_points_ids = random.sample(range(0, number_of_samples), self.K)
+
+        # get points based on given idex
+        centroids = [tuple(data[id]) for id in sample_points_ids]
+
+        # list of choosen centroids
+        unique_centroids = list(set(centroids)) 
+
+        number_of_unique_centroids = len(unique_centroids)
+        while number_of_unique_centroids < self.K:
+            new_sample_points_ids = random.sample(range(0, number_of_samples), 
+                                                    self.K - number_of_unique_centroids)
+            new_centroids = [tuple(data[id]) for id in new_sample_points_ids]
+            unique_centroids = list(set(unique_centroids + new_centroids))
+
+            number_of_unique_centroids = len(unique_centroids)
+
+        return np.array(unique_centroids)
+
     def _has_convergence(self,prev_centroids, curr_centroids): 
         ''' 
         Check if any centroids moved more than 'self.tol'/tolerance threshold 
@@ -118,9 +132,9 @@ class K_means:
         ''' 
         Perform K-means clusterings on given dataset
         param: 
-            data:  
+            data: numpy array 
         return: 
-
+            None
         ''' 
 
         # init centroid
@@ -131,25 +145,20 @@ class K_means:
         while not centroids_convered: 
             prev_centroids = new_centroids 
             clusters = self._assign_to_clusters(data,prev_centroids)
-            # new_centroids = 
+
             # TODO: working on compute new_centroids compute average 
             new_centroids = np.array([np.mean(clusters[key], axis=0, dtype=data.dtype) 
                                     for key in clusters.keys() ])
-            # new_centroids = np.array([np.mean(clusters[key], axis=0, dtype=data.dtype) 
-            #                         for key in sorted(clusters.keys())
-            # ])
-                
-            print(new_centroids)
-            # centroids_convered = self._has_convergence(prev_centroids, new_centroids)
 
+            centroids_convered = self._has_convergence(prev_centroids, new_centroids)
 
         self.centroid = new_centroids
         
-        # return self.centroids 
 
     def predict(self, data_test): 
         ''' 
-        Clustering data test with compute centroids 
+        Predict which cluster a new point belongs to; 
+        calculates euclidean distance from point to all centroids
         param:
             data_test: numpy array 
         return: 

@@ -75,7 +75,6 @@ def get_clusters(X, centroids, distance_mesuring_method):
     clusters = {}
 
     distance_matrix = distance_mesuring_method(X, centroids)
-    len(distance_matrix)
     closest_cluster_ids = np.argmin(distance_matrix, axis=1)
     # closest_cluster_ids = np.argmin(distance_matrix)
 
