@@ -5,6 +5,7 @@ import seaborn as sns
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
+# Ref: https://dfrieds.com/machine-learning/k-means-from-scratch-python.html
 class KMeans(object):
     """
     Calculations associated with K-Means clustering on a set of n-dimensional data points to find clusters - closely

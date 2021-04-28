@@ -168,5 +168,7 @@ class K_means:
             data_test: numpy array 
         return: 
         ''' 
-        pass 
-
+        return [self._predict_one(x) for x in data_test]
+        
+    def score(self, X, y):
+        return sum(1 for predict, test in zip(self.predict(X), y) if predict == test) / len(y)
